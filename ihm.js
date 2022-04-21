@@ -3,12 +3,12 @@ import { Todo } from "./classes/todo.js"
 export class Ihm{
     constructor(){
         this.todos = []
+        this.compteur = 0;
     }
     demarrer(){
-        const todo1 = new Todo()
-        const todo2 = new Todo()
-        //ajoute 2 todos dans le tableau
-
+        this.ajouterTodo(new Todo(this.compteur,"ranger mon casque","range ton casque dans la boite a casque"))
+        this.ajouterTodo(new Todo(this.compteur,"faire des courses","acheter du pain, des pates, etc"))
+        this.ajouterTodo(new Todo(this.compteur,"supprimer le todo","tu dois supprimer le todo faire des courses"))
         //affiche le tableau de todos
 
         //clique sur le bouton valider qui ajoute un todo
@@ -22,8 +22,10 @@ export class Ihm{
 
         //clique sur la case fait et change le bool du todo
     }
-    ajouterTodo(){
-
+    ajouterTodo(todo){
+        todos.push(todo);
+        this.afficherTodo(todo)
+        this.compteur++
     }
     changerStatutTodo(){
 
@@ -31,7 +33,13 @@ export class Ihm{
     supprimerTodo(){
 
     }
-    afficherTodo(){
+    afficherTodo(todo){
+        this.tableauHtml.innerHTML += `<tr>
+        <td>${id}</td> 
+        <td>${titre}</td>
+        <td>${contenu}</td> 
+        <td>${statut}</td> 
+        </tr>`
 
     }
 }   
