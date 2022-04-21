@@ -69,6 +69,7 @@ export class Ihm{
            <th scope="col">Titre</th>
            <th scope="col">Contenu</th>
            <th scope="col">Statut</th>
+           <th scope="col">Action</th>
         </tr>`
         for(let i=0;i<todos.length;++i){
             const { id, titre, contenu, statut } = todos[i].method()
