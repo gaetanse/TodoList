@@ -19,5 +19,18 @@ export class Ihm{
         // du tableau et l'affiche
 
         //clique sur la case fait et change le bool du todo
+    } test () {
+        test test test test
     }
+    
 }
+
+
+
+
+
+
+
+
+
+
