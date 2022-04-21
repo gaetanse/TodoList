@@ -10,8 +10,13 @@ export class Ihm{
         this.ajouterTodo(new Todo(this.compteur,"faire des courses","acheter du pain, des pates, etc"))
         this.ajouterTodo(new Todo(this.compteur,"supprimer le todo","tu dois supprimer le todo faire des courses"))
 
-        //clique sur le bouton valider qui ajoute un todo
-        //dans le tableau et l'affiche dans le tableau
+        const buttonAjouter = document.getElementById('valider')
+        buttonAjouter.addEventListener('click', (e)=>{
+            e.preventDefault()
+            this.ajouterTodo(new Todo(this.compteur,document.getElementById('inputTitre').value,document.getElementById('contenu').value))
+        })
+
+        this.rechercher()
 
         //clique sur le bouton recherche ca recherche tous les memes titre
         //dans le tableau de todos et ca les affiches
@@ -29,8 +34,58 @@ export class Ihm{
     changerStatutTodo(){
 
     }
-    supprimerTodo(){
-
+    rechercher(){
+        const search = document.getElementById('search')
+        const btnSearch = document.getElementById('btnsearch')
+        btnSearch.addEventListener('click', (e)=>{
+            const arrays = []
+            for(let i=0;i<this.todos;++i){
+                const { titre } = this.todos[i].method()
+                if(titre===search.value)
+                    arrays.push(this.todos[i])
+            }
+            console.log(arrays)
+            this.afficherTodoRecherche(arrays);
+        })
+    }
+    supprimerTodo(index){
+        console.log(index)
+        this.todos.splice(index, 1);
+        console.log(this.todos)
+        this.afficherTodo(this.todos)
+    }
+    afficherTodoRecherche(todos){
+        const tableauHtml = document.getElementsByTagName('table')[0]
+        tableauHtml.innerHTML = 
+        `<tr class="table-dark">
+           <th scope="col">Id</th>
+           <th scope="col">Titre</th>
+           <th scope="col">Contenu</th>
+           <th scope="col">Statut</th>
+        </tr>`
+        for(let i=0;i<todos.length;++i){
+            const { id, titre, contenu, statut } = todos[i].method()
+            tableauHtml.innerHTML += 
+            `<tr>
+                <td>${id}</td> 
+                <td>${titre}</td>
+                <td>${contenu}</td> 
+                <td>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked">
+                    <label class="form-check-label" for="flexSwitchCheckChecked">fait</label>
+                </div>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-danger" id="buttonSupprimer${id}">Supprimer</button>
+                </td> 
+            </tr>`
+            const ButtonSupprimer = document.getElementById('buttonSupprimer'+id)
+            ButtonSupprimer.addEventListener('click', (e)=>{
+                e.preventDefault()
+                this.supprimerTodo(id)
+            })
+        }
     }
     afficherTodo(todos){
         const tableauHtml = document.getElementsByTagName('table')[0]
@@ -55,9 +110,14 @@ export class Ihm{
                 </div>
                 </td>
                 <td>
-                    <button type="button" class="btn btn-danger" id="buttonSupprimer">Supprimer</button>
+                    <button type="button" class="btn btn-danger" id="buttonSupprimer${id}">Supprimer</button>
                 </td> 
             </tr>`
+            const ButtonSupprimer = document.getElementById('buttonSupprimer'+id)
+            ButtonSupprimer.addEventListener('click', (e)=>{
+                e.preventDefault()
+                this.supprimerTodo(id)
+            })
         }
     }
 }   
