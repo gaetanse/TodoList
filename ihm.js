@@ -33,7 +33,13 @@ export class Ihm{
     supprimerTodo(){
 
     }
-    afficherTodo(){
+    afficherTodo(todo){
+        this.tableauHtml.innerHTML += `<tr>
+        <td>${id}</td> 
+        <td>${titre}</td>
+        <td>${contenu}</td> 
+        <td>${statut}</td> 
+        </tr>`
 
     }
 }   
