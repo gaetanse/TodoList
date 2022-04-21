@@ -5,6 +5,7 @@ export class Ihm{
         this.todos = []
     }
     demarrer(){
+        const todo1 = new Todo()
         //ajoute 2 todos dans le tableau
 
         //affiche le tableau de todos
@@ -20,4 +21,4 @@ export class Ihm{
 
         //clique sur la case fait et change le bool du todo
     }
-}
+}   
