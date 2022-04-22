@@ -13,7 +13,18 @@ export class Ihm{
         const buttonAjouter = document.getElementById('valider')
         buttonAjouter.addEventListener('click', (e)=>{
             e.preventDefault()
-            this.ajouterTodo(new Todo(this.compteur,document.getElementById('inputTitre').value,document.getElementById('contenu').value))
+            const p = new Promise((resolve) => {
+                const rechercheText = document.getElementById('rechercheText')
+                rechercheText.innerText = `ajouter promesse en cours`
+                setTimeout(() => {
+                    this.ajouterTodo(new Todo(this.compteur,document.getElementById('inputTitre').value,document.getElementById('contenu').value))
+                    resolve({data : "ajouter promesse fini"})
+                },1000)
+            })
+            p.then((response) => {
+                const rechercheText = document.getElementById('rechercheText')
+                rechercheText.innerText = response.data
+            })
         })
 
         this.rechercher()
@@ -33,19 +44,34 @@ export class Ihm{
         const search = document.getElementById('search')
         const btnSearch = document.getElementById('btnsearch')
         btnSearch.addEventListener('click', (e)=>{
-            if(search.value===""){
-                this.afficherTodo(this.todos);
-            }
-            else{
-                const arrays = []
-                for(let i=0;i<this.todos.length;++i){
-                    const { titre } = this.todos[i].method()
-                    if(titre===search.value){
-                        arrays.push(this.todos[i])
+
+            const p = new Promise((resolve) => {
+                const rechercheText = document.getElementById('rechercheText')
+                rechercheText.innerText = `rechercher promesse en cours`
+                setTimeout(() => {
+                    
+                    if(search.value===""){
+                        this.afficherTodo(this.todos);
                     }
-                }
-                this.afficherTodo(arrays);
-            }
+                    else{
+                        const arrays = []
+                        for(let i=0;i<this.todos.length;++i){
+                            const { titre } = this.todos[i].method()
+                            if(titre===search.value){
+                                arrays.push(this.todos[i])
+                            }
+                        }
+                        this.afficherTodo(arrays);
+                    }
+
+                    resolve({data : "rechercher promesse fini"})
+                },1000)
+            })
+
+            p.then((response) => {
+                const rechercheText = document.getElementById('rechercheText')
+                rechercheText.innerText = response.data
+            })
         })
     }
 
@@ -56,7 +82,19 @@ export class Ihm{
             const ButtonSupprimer = document.getElementById('buttonSupprimer'+id)
             ButtonSupprimer.addEventListener('click', (e)=>{
                 e.preventDefault()
+                const p = new Promise((resolve) => {
+                    const rechercheText = document.getElementById('rechercheText')
+                    rechercheText.innerText = `supprimer promesse en cours`
+                    setTimeout(() => {
                 this.supprimerTodo(id)
+                resolve({data : "supprimer promesse fini"})
+                    },1000)
+                })
+
+                p.then((response) => {
+                    const rechercheText = document.getElementById('rechercheText')
+                    rechercheText.innerText = response.data
+                })
             })
         }
     }
