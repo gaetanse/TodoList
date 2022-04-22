@@ -18,12 +18,6 @@ export class Ihm{
 
         this.rechercher()
 
-        //clique sur le bouton recherche ca recherche tous les memes titre
-        //dans le tableau de todos et ca les affiches
-
-        //clique sur le bouton supprimer qui supprime le todo
-        // du tableau et l'affiche
-
         //clique sur la case fait et change le bool du todo
     }
     ajouterTodo(todo){
@@ -35,6 +29,7 @@ export class Ihm{
 
     }
     rechercher(){
+
         const search = document.getElementById('search')
         const btnSearch = document.getElementById('btnsearch')
         btnSearch.addEventListener('click', (e)=>{
@@ -46,19 +41,33 @@ export class Ihm{
                 for(let i=0;i<this.todos.length;++i){
                     const { titre } = this.todos[i].method()
                     if(titre===search.value){
-                        console.log(titre+ " / "+search.value)
                         arrays.push(this.todos[i])
                     }
                 }
-                console.log(arrays)
                 this.afficherTodo(arrays);
             }
         })
     }
-    supprimerTodo(index){
-        console.log(index)
-        this.todos.splice(index, 1);
-        console.log(this.todos)
+
+    boutonsSupprimer(todos){
+        for(let i=0;i<todos.length;++i){
+            const { id } = todos[i].method()
+            console.log(id)
+            const ButtonSupprimer = document.getElementById('buttonSupprimer'+id)
+            ButtonSupprimer.addEventListener('click', (e)=>{
+                e.preventDefault()
+                this.supprimerTodo(id)
+            })
+        }
+    }
+
+    supprimerTodo(id2){
+        for(let i=0;i<this.todos.length;++i){
+            const { id } = this.todos[i].method()
+            if(id===id2){
+                this.todos.splice(i, 1);
+            }
+        }
         this.afficherTodo(this.todos)
     }
     afficherTodo(todos){
@@ -72,7 +81,7 @@ export class Ihm{
            <th scope="col">Action</th>
         </tr>`
         for(let i=0;i<todos.length;++i){
-            const { id, titre, contenu, statut } = todos[i].method()
+            const { id, titre, contenu } = todos[i].method()
             tableauHtml.innerHTML += 
             `<tr>
                 <td>${id}</td> 
@@ -88,11 +97,7 @@ export class Ihm{
                     <button type="button" class="btn btn-danger" id="buttonSupprimer${id}">Supprimer</button>
                 </td> 
             </tr>`
-            const ButtonSupprimer = document.getElementById('buttonSupprimer'+id)
-            ButtonSupprimer.addEventListener('click', (e)=>{
-                e.preventDefault()
-                this.supprimerTodo(id)
-            })
         }
+        this.boutonsSupprimer(todos)
     }
 }   
